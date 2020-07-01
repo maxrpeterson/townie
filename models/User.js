@@ -6,6 +6,11 @@ const UserSchema = new Schema({
     type: String,
     required: true,
   },
+  accountType: {
+    type: String,
+    enum: ["business", "individual"],
+    required: true,
+  },
   password: {
     type: String,
     required: true,
