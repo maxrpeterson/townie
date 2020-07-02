@@ -4,8 +4,12 @@ const app = express();
 const db = require("./config/keys").mongoURI;
 const bodyParser = require("body-parser");
 
+const usersRouter = require('./routes/api/users');
+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+app.use(usersRouter);
 
 mongoose
   .connect(db, { useNewUrlParser: true })
