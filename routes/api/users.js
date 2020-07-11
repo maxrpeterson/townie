@@ -14,7 +14,7 @@ router.post("/register", (req, res) => {
     } else {
       // Otherwise create a new user
       const newUser = new User({
-        // accountType: req.body.accountType,
+        accountType: req.body.accountType,
         email: req.body.email,
         password: req.body.password,
       });
