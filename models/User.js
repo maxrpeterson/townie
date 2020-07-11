@@ -8,7 +8,7 @@ const UserSchema = new Schema({
   },
   accountType: {
     type: String,
-    enum: ["business", "individual"],
+    // enum: ["business", "individual"],
     required: true,
   },
   password: {
