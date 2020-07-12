@@ -1,4 +1,6 @@
 import { GoogleMap } from 'components/GoogleMap';
+import { Header } from 'components/Header';
+import { NavTabs } from 'components/NavTabs';
 
 export async function getServerSideProps(context) {
   return {
@@ -9,6 +11,11 @@ export async function getServerSideProps(context) {
 
 export default function Index({ markers }) {
   return (
-    <GoogleMap />
+    <div className="page-container">
+      <Header />
+      <NavTabs />
+      <aside className="sidebar"></aside>
+      <GoogleMap />
+    </div>
   );
 }

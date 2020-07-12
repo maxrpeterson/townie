@@ -1,4 +1,7 @@
 @import '../components/MapMarker/styles.css';
+@import '../components/GoogleMap/styles.css';
+@import '../components/Header/styles.css';
+@import '../components/NavTabs/styles.css';
 
 html {
   font-size: 16px;
@@ -6,4 +9,22 @@ html {
 
 body {
   margin: 0;
+}
+
+.page-container {
+  height: 100vh;
+  display: grid;
+  grid:
+    "main-header main-header" 60px
+    "sidebar-header nav-tabs" 40px
+    "sidebar main" 1fr
+    / 1fr 2fr;
+}
+
+.header {
+  grid-area: main-header;
+}
+
+.sidebar {
+  grid-area: sidebar;
 }
