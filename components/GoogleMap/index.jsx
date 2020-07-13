@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import GoogleMapReact from 'google-map-react';
 
 import { MapMarker } from 'components/MapMarker';
+import { MapMarkersContext } from 'components/MapMarkersContext';
 
 import config from './mapConfig';
 
@@ -9,9 +10,10 @@ function getMapOptions() {
   return config;
 }
 
-export function GoogleMap({ mapMarkers = [] }) {
+export function GoogleMap() {
+  const { markers } = useContext(MapMarkersContext);
+
   return (
-    // Important! Always set the container height explicitly
     <div className="google-map-container">
       <GoogleMapReact
         bootstrapURLKeys={{ key: process.env.NEXT_PUBLIC_GOOGLE_MAPS_BOOTSTRAP_URL }}
@@ -19,7 +21,7 @@ export function GoogleMap({ mapMarkers = [] }) {
         defaultZoom={13}
         options={getMapOptions}
       >
-       {mapMarkers.map((item) => (
+       {markers.map((item) => (
           <MapMarker
             key={item.key}
             text={item.text}

@@ -1,38 +1,44 @@
+import React, { useEffect } from 'react';
 import useSwr from 'swr';
 
-import { GoogleMap } from 'components/GoogleMap';
-import { Header } from 'components/Header';
-import { NavTabs } from 'components/NavTabs';
+import { MapMarkersContext } from 'components/MapMarkersContext';
+import { getLayout } from 'components/MapLayout';
 
 const fetcher = (...args) => fetch(...args).then(res => res.json())
 
-// export async function getServerSideProps(context) {
-//   return {
-//     props: {
-//     }, // will be passed to the page component as props
-//   }
-// }
+function CovidTestingSitesPage() {
+  const { setState: setMapMarkers } = React.useContext(MapMarkersContext);
+  const { data, error } = useSwr('/api/testing-sites', fetcher);
+  if (error) {
+    console.error('Error loading data from API for /api/testing-sites: ', error);
+  }
 
-export default function CovidTestingSitesPage({ markers }) {
-  const { data, error } = useSwr('/api/testing-sites', fetcher, { initialData: [] });
+  useEffect(() => {
+    const formattedData = (data || []).map((site) => ({
+      key: `${site.site_name}+${site.coordinates.lat}+${site.coordinates.lng}`,
+      text: site.site_name,
+      coordinates: {
+        lat: site.coordinates.lat,
+        lng: site.coordinates.lng,
+      },
+    }));
+    setMapMarkers(formattedData);
 
-  const formattedData = data.map((site) => ({
-    key: `${site.site_name}+${site.coordinates.lat}+${site.coordinates.lng}`,
-    text: site.site_name,
-    coordinates: {
-      lat: site.coordinates.lat,
-      lng: site.coordinates.lng,
-    },
-  }));
+    return () => {
+      setMapMarkers([]);
+    }
+  }, [data, setMapMarkers]);
+
 
   return (
-    <div className="page-container">
-      <Header />
-      <NavTabs />
-      <aside className="sidebar"></aside>
-      <GoogleMap
-        mapMarkers={formattedData}
-      />
+    <div className="sidebar-content">
+      {error && 'Error loading content'}
+      {!data && !error && 'Loading...'}
+      {!error && data && 'Data goes here in addition to the map'}
     </div>
   );
 }
+
+CovidTestingSitesPage.getLayout = getLayout;
+
+export default CovidTestingSitesPage;

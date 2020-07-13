@@ -1,21 +1,15 @@
-import { GoogleMap } from 'components/GoogleMap';
-import { Header } from 'components/Header';
-import { NavTabs } from 'components/NavTabs';
+import React from 'react';
 
-export async function getServerSideProps(context) {
-  return {
-    props: {
-    }, // will be passed to the page component as props
-  }
-}
+import { getLayout } from 'components/MapLayout';
 
-export default function Index({ markers }) {
+function Index() {
   return (
-    <div className="page-container">
-      <Header />
-      <NavTabs />
-      <aside className="sidebar"></aside>
-      <GoogleMap />
+    <div className="sidebar-content">
+      Welcome to Townie
     </div>
   );
 }
+
+Index.getLayout = getLayout;
+
+export default Index;
