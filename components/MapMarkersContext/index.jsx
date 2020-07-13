@@ -14,7 +14,7 @@ export function Provider({ children }) {
   }, [markers, setState]);
 
   return (
-  <MapMarkersContext.Provider value={{ markers, setState}}>
+  <MapMarkersContext.Provider value={markersState}>
     {children}
   </MapMarkersContext.Provider>
   );
